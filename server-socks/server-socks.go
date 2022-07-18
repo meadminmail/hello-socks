@@ -27,18 +27,15 @@ type Destination struct {
 
 func main() {
 
-	flagAddr := flag.String("addr", "", "where to listen like 127.0.0.1:8000")
-	flagHtpasswdFile := flag.String("auth", "", "basic auth file")
-	flagDestinationsFile := flag.String("destinations", "", "file with destinations config")
-	flagCert := flag.String("cert", "", "path to server cert.pem")
-	flagKey := flag.String("key", "", "path to server key.pem")
+	flagAddr := flag.String("addr", "0.0.0.0:8000", "where to listen like 127.0.0.1:8000")
+
 	flagDisableBasicAuthCaching := flag.Bool("disable-basic-auth-caching", false, "if set disables caching of basic auth user and password")
 	flag.Parse()
 
 	// 解析配置文件
-	destinationBytes, err := ioutil.ReadFile(*flagDestinationsFile)
+	destinationBytes, err := ioutil.ReadFile("./destinations.yaml")
 	if err != nil {
-		fmt.Printf("can not read destinations config, 错误：%v", err)
+		fmt.Print("can not read destinations config, 错误：", err)
 		return
 	}
 	destinations := map[string]*Destination{}
@@ -49,7 +46,7 @@ func main() {
 		return
 	}
 
-	passwordHashes, err := htpasswd.ParseHtpasswdFile(*flagHtpasswdFile)
+	passwordHashes, err := htpasswd.ParseHtpasswdFile("./users.htpasswd")
 	if err != nil {
 		fmt.Printf("basic auth file sucks, 错误：%v", err)
 		return
@@ -73,7 +70,7 @@ func main() {
 		return
 	}
 
-	cert, err := tls.LoadX509KeyPair(*flagCert, *flagKey)
+	cert, err := tls.LoadX509KeyPair("certificate.crt", "certificate.key")
 
 	if err != nil {
 		fmt.Printf("could not load server key pair, 错误：%v", err)
