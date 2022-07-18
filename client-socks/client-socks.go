@@ -23,7 +23,7 @@ const (
 func main() {
 	flagLocalAddr := flag.String("addr", "0.0.0.0:8080", "address to listen to like 0.0.0.0:8080")
 
-	flagRemoteAddr := flag.String("server", "", "address of the tls socks server like 0.0.0.0:8000")
+	flagRemoteAddr := flag.String("server", "192.168.74.128:8000", "address of the tls socks server like 0.0.0.0:8000")
 	flagInsecureSkipVerify := flag.Bool("insecure-skip-verify", false, "allow insecure skipping of peer verification, when talking to the server")
 	flag.Parse()
 
