@@ -4,6 +4,7 @@ go 1.18
 
 require (
 	github.com/armon/go-socks5 v0.0.0-20160902184237-e75332964ef5
+	golang.org/x/crypto v0.0.0-20200115085410-6d4e4cb37c7d
 	gopkg.in/yaml.v2 v2.4.0
 )
 
@@ -11,7 +12,6 @@ require (
 	github.com/GehirnInc/crypt v0.0.0-20190301055215-6c0105aabd46 // indirect
 	go.uber.org/atomic v1.7.0 // indirect
 	go.uber.org/multierr v1.6.0 // indirect
-	golang.org/x/crypto v0.0.0-20200115085410-6d4e4cb37c7d // indirect
 )
 
 require (

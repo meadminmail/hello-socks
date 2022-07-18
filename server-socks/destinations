@@ -1,0 +1,16 @@
+---
+www.heise.de:
+  ports: 
+    - 80
+    - 443
+  users:
+    - jan
+    - peter
+    - test
+
+www.google.com:
+  ports: 
+    - 443
+  users:
+    - peter
+    - test
