@@ -29,7 +29,7 @@ func main() {
 
 	flagAddr := flag.String("addr", "0.0.0.0:8000", "where to listen like 127.0.0.1:8000")
 
-	flagDisableBasicAuthCaching := flag.Bool("disable-basic-auth-caching", false, "if set disables caching of basic auth user and password")
+	flagDisableBasicAuthCaching := flag.Bool("disable-basic-auth-caching", true, "if set disables caching of basic auth user and password")
 	flag.Parse()
 
 	// 解析配置文件
