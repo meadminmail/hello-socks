@@ -7,14 +7,11 @@ import (
 	"fmt"
 	"io"
 	"net"
-	"net/http"
 	"os"
 	"os/signal"
 	"sync/atomic"
 	"syscall"
 	"time"
-
-	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 // 超时时间设置
@@ -27,7 +24,7 @@ const (
 func main() {
 	flagLocalAddr := flag.String("addr", "0.0.0.0:8080", "address to listen to like 0.0.0.0:8080")
 
-	flagRemoteAddr := flag.String("server", "192.168.74.128:8000", "address of the tls socks server like 0.0.0.0:8000")
+	flagRemoteAddr := flag.String("server", "192.168.74.128:8001", "address of the tls socks server like 0.0.0.0:8000")
 	flagInsecureSkipVerify := flag.Bool("insecure-skip-verify", false, "allow insecure skipping of peer verification, when talking to the server")
 	flag.Parse()
 
@@ -50,8 +47,6 @@ func main() {
 
 	// 创建上下文
 	ctx := ctxCancelOnOsSignal()
-
-	RunPrometheusHandler(ctx, defaultPrometheusAddress)
 
 	var connID uint64
 	for {
@@ -159,26 +154,6 @@ func (p *proxy) pipe(ctx context.Context, dist io.Writer, src io.Reader, isLocal
 			atomic.AddUint64(&p.sentBytes, uint64(n))
 		} else {
 			atomic.AddUint64(&p.receivedBytes, uint64(n))
-		}
-	}
-}
-
-func RunPrometheusHandler(ctx context.Context, address string) {
-	h := http.NewServeMux()
-	h.Handle("/metrics", promhttp.Handler())
-	server := &http.Server{Addr: address, Handler: h}
-
-	go func() {
-		if err := server.ListenAndServe(); err != nil {
-			fmt.Printf("Failed to start prometheus handler：%v", err)
-		}
-	}()
-
-	select {
-	case <-ctx.Done():
-		fmt.Println("Shutdown prometheus handler in progress")
-		if err := server.Shutdown(ctx); err != nil && err != context.Canceled {
-			fmt.Printf("Failed to Shutdown prometheus handler：%v", err)
 		}
 	}
 }
