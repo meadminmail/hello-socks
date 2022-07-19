@@ -28,7 +28,7 @@ func main() {
 	log, _ := zap.NewProduction()
 	defer log.Sync()
 
-	flagAddr := flag.String("addr", "", "where to listen like 127.0.0.1:8000")
+	flagAddr := flag.String("addr", "0.0.0.0:8000", "where to listen like 127.0.0.1:8000")
 	flagHtpasswdFile := flag.String("auth", "", "basic auth file")
 	flagDestinationsFile := flag.String("destinations", "", "file with destinations config")
 	flagCert := flag.String("cert", "", "path to server cert.pem")
