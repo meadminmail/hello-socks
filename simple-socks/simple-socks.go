@@ -1,8 +1,11 @@
 package main
 
-import "github.com/armon/go-socks5"
+import (
+	"github.com/armon/go-socks5"
+)
 
 func main() {
+
 	// Create a SOCKS5 server
 	conf := &socks5.Config{}
 	server, err := socks5.New(conf)

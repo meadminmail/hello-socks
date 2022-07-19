@@ -4,3 +4,5 @@ use ./client-socks
 use ./server-socks
 use ./middle-proxy
 use ./simple-socks
+use ./client-test
+use ./util
