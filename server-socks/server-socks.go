@@ -9,7 +9,8 @@ import (
 	"time"
 	"util"
 
-	"github.com/armon/go-socks5"
+	"socks5"
+
 	"github.com/foomo/htpasswd"
 	"github.com/patrickmn/go-cache"
 	"github.com/spaolacci/murmur3"

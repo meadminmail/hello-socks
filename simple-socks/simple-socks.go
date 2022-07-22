@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/armon/go-socks5"
+	"socks5"
 )
 
 func main() {

@@ -5,4 +5,5 @@ use ./server-socks
 use ./middle-proxy
 use ./simple-socks
 use ./client-test
+use ./socks5
 use ./util

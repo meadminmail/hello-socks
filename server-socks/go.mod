@@ -3,7 +3,6 @@ module server-socks
 go 1.18
 
 require (
-	github.com/armon/go-socks5 v0.0.0-20160902184237-e75332964ef5
 	golang.org/x/crypto v0.0.0-20200115085410-6d4e4cb37c7d
 	gopkg.in/yaml.v2 v2.4.0
 )
@@ -19,5 +18,4 @@ require (
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/spaolacci/murmur3 v1.1.0
 	go.uber.org/zap v1.21.0
-	golang.org/x/net v0.0.0-20220708220712-1185a9018129 // indirect
 )
