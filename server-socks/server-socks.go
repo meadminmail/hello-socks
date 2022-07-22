@@ -29,10 +29,10 @@ func main() {
 	defer log.Sync()
 
 	flagAddr := flag.String("addr", "0.0.0.0:8000", "where to listen like 127.0.0.1:8000")
-	flagHtpasswdFile := flag.String("auth", "", "basic auth file")
-	flagDestinationsFile := flag.String("destinations", "", "file with destinations config")
-	flagCert := flag.String("cert", "", "path to server cert.pem")
-	flagKey := flag.String("key", "", "path to server key.pem")
+	flagHtpasswdFile := flag.String("auth", "./users.htpasswd", "basic auth file")
+	flagDestinationsFile := flag.String("destinations", "destinations.yaml", "file with destinations config")
+	flagCert := flag.String("cert", "certificate.crt", "path to server cert.pem")
+	flagKey := flag.String("key", "certificate.key", "path to server key.pem")
 	flagDisableBasicAuthCaching := flag.Bool("disable-basic-auth-caching", false, "if set disables caching of basic auth user and password")
 	flag.Parse()
 
