@@ -14,3 +14,11 @@ www.google.com:
   users:
     - peter
     - test
+192.168.74.128:
+  ports: 
+    - 80
+    - 443
+  users:
+    - jan
+    - peter
+    - test
