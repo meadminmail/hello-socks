@@ -15,7 +15,7 @@ func main() {
 	flagSocksServer := flag.String("socks-server", "socks5://test:test@127.0.0.1:8080", "addr of socks server like socks://user:pass@127.0.0.1:8000")
 	flag.Parse()
 
-	urlToFetch := "https://www.baidu.com"
+	urlToFetch := "http://192.168.74.128/"
 
 	proxyURL, err := url.Parse(*flagSocksServer)
 
