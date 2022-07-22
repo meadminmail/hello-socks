@@ -3,8 +3,12 @@ package main
 import (
 	"context"
 	"crypto/tls"
+	"crypto/x509"
 	"flag"
+	"fmt"
 	"io"
+	"io/ioutil"
+	"log"
 	"net"
 	"sync/atomic"
 	"time"
@@ -49,6 +53,7 @@ func main() {
 
 	tlsConfig := &tls.Config{
 		InsecureSkipVerify: *flagInsecureSkipVerify,
+		RootCAs:            loadCA("certificate.crt"),
 	}
 	if tlsConfig.InsecureSkipVerify {
 		log.Warn("Running without verification of the tls server - this is dangerous")
@@ -82,6 +87,7 @@ func serve(ctx context.Context, logger *zap.Logger, localConn net.Conn, remoteAd
 		logger.Warn("could not reach remote tls server", zap.Error(err))
 		return
 	}
+	fmt.Println("+++++++++++++++++++++++++++++++++++++ to tls server")
 	defer util.SilentClose(remoteConn)
 
 	p := &proxy{
@@ -89,6 +95,7 @@ func serve(ctx context.Context, logger *zap.Logger, localConn net.Conn, remoteAd
 		wait: make(chan struct{}),
 	}
 
+	fmt.Println("+++++++++++++++++++++++++++++++++++++ to tls new proly")
 	deadline := start.Add(connDeadline)
 	_ = localConn.SetDeadline(deadline)
 	_ = remoteConn.SetDeadline(deadline)
@@ -165,4 +172,15 @@ func (p *proxy) err(message string, err error) {
 	default:
 		close(p.wait)
 	}
+}
+
+func loadCA(caFile string) *x509.CertPool {
+	pool := x509.NewCertPool()
+
+	if ca, e := ioutil.ReadFile(caFile); e != nil {
+		log.Fatal("ReadFile: ", e)
+	} else {
+		pool.AppendCertsFromPEM(ca)
+	}
+	return pool
 }
